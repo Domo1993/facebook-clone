@@ -5,7 +5,6 @@ import SidebarRow from "./SidebarRow"
 
 export default function SideBar() {
     const {data} = useSession()
-    console.log(data.user,'SIDEBAR')
   return (
     <div className="p-2 mt-5 max-w-[600px] xl:min-w-[300px]">
       <SidebarRow src={data.user.image} title={data.user.name} />

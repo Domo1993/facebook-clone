@@ -16,7 +16,7 @@ export default function InputBox() {
     const filePickerRef = useRef(null)
     const [imageToPost, setImageToPost] = useState(null)
 
-    const sendPost = (e) => {
+    const sendPost = async (e) => {
         e.preventDefault()
         if(!inputRef.current.value) return;
         const message = inputRef.current.value
@@ -26,7 +26,7 @@ export default function InputBox() {
             uploadString(storageRef, imageToPost, "data_url").then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     console.log(url,'URL')
-                  addDoc(dbInstance, {
+                  setDoc(doc(dbInstance), {
                     message: message,
                     name: data.user.name,
                     email: data.user.email,
@@ -37,7 +37,7 @@ export default function InputBox() {
                 });
               });
         } else {
-            addDoc(dbInstance,{
+            setDoc(doc(dbInstance),{
                 message: inputRef.current.value,
                 name: data.user.name,
                 email: data.user.email,
@@ -45,44 +45,7 @@ export default function InputBox() {
                 timestamp: serverTimestamp()
         })
         }
-        // addDoc(dbInstance,{
-        //     message: inputRef.current.value,
-        //     name: data.user.name,
-        //     email: data.user.email,
-        //     image: data.user.image,
-        //     timestamp: serverTimestamp()
-        // }).then(doc => {
-        //     console.log(doc.id,"DOC")
-        //     if(imageToPost){
-        //         // const uploadTask = storage.ref(`posts/${doc.id}`).putString(imageToPost,'data_url')
-
-                // removeImage()
-                // uploadTask.on('state_change',null, error => console.error(error),()=>{
-                //     storage.ref('posts').child(doc.id).getDownloadURL().then(url => {
-                //         dbInstance.collection('posts').doc(doc.id).set({
-                //             postImage: url
-                //         }, {merge: true})
-                //     })
-                // })
-        //         const storageRef = ref(storage, `posts${doc.id}`)
-        //         uploadString(storageRef, imageToPost, "data_url").then((snapshot) => {
-        //             getDownloadURL(snapshot.ref).then((url) => {
-        //                 console.log(url,'URL')
-        //               addDoc(dbInstance, {
-        //                 // message: inputRef.current.value,
-        //                 // name: data.user.name,
-        //                 // email: data.user.email,
-        //                 // image: data.user.image,
-        //                 postImage: url,
-        //                 // timestamp: serverTimestamp()
-        //             });
-        //             });
-        //           });
-          
-        //         //   removeImage();
-        //     }
-        // })
-
+        removeImage()
         inputRef.current.value = ''
     }
 
@@ -95,6 +58,10 @@ export default function InputBox() {
         reader.onload = (readerEvent) => {
             setImageToPost(readerEvent.target.result)
         }
+    }
+
+    const removeImage = () => {
+        setImageToPost(null)
     }
 
   return (
@@ -117,9 +84,9 @@ export default function InputBox() {
         </form>
 
         {imageToPost && (
-            <div className="flex flex-col filter hover:brightness-110 transition duration-150 transform
+            <div onClick={removeImage} className="flex flex-col filter hover:brightness-110 transition duration-150 transform
             hover:scale-105 cursor-pointer">
-                <img className="h-10 object-contain" src={imageToPost} alt=""/>
+                <img className="h-10 object-contain" src={imageToPost} alt="Uploaded image"/>
                 <p className="text-xs text-red-500 text-center">Remove</p>
             </div>
         )}

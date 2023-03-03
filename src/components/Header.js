@@ -7,7 +7,6 @@ import { signOut, useSession } from 'next-auth/react'
 export default function Header() {
     const {data} = useSession() 
 
-    console.log(data.user.image,"HeaderSession")
   return (
     <div className='sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md'>
         <div className='flex ml-2 items-center'>
@@ -24,7 +23,7 @@ export default function Header() {
         {/* Center */}
         <div className='flex justify-center flex-grow'>
             <div className='flex space-x-6 md:space-x-2'>
-                <HeaderIcon Icon={HomeIcon} active/>
+                <HeaderIcon Icon={HomeIcon} isActive/>
                 <HeaderIcon Icon={FlagIcon} />
                 <HeaderIcon Icon={PlayIcon} />
                 <HeaderIcon Icon={ShoppingCartIcon} />
@@ -43,6 +42,7 @@ export default function Header() {
                 src={data.user.image}
                 width='40'
                 height='40'
+                alt='profile pic'
             />
 
             <p className='hidden lg:inline-flex whitespace-nowrap font-semibold pr-3'>{data.user.name}</p>

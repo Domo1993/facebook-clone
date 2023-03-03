@@ -11,11 +11,14 @@ export default function StoryCard({ name, src, profile }) {
         height={40}
         alt="circle img"
       />
-      <Image 
+      <Image
         className='absolute object-cover filter brightness-75 rounded-full lg:rounded-3xl'
         src={src}
         alt="bigger img"
         fill
+        sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
       />
       <p className='absolute opacity-0 lg:opacity-100 bottom-4 w-5/6 text-white
       text-sm font-bold truncate'>{name}</p>
