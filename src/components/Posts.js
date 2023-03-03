@@ -1,38 +1,15 @@
-import { collection, getFirestore, getDocs } from "firebase/firestore";
-import { database, app } from '../../firebase'
+import { collection, getFirestore, orderBy } from "firebase/firestore";
+import { app } from '../../firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
-import { useEffect, useState } from "react";
 import Post from "./Post";
-// import {ref, getDatabase} from 'firebase/database'
-// import { useList } from 'react-firebase-hooks/database';
-
-// const db = getDatabase(database);
 
 export default function Posts({ posts }) {
-    const [data,setData] = useState(null)
+    // const [realtimePosts, loading, error] = useCollection(
+    //     collection(getFirestore(app),'posts'), orderBy('timestamp','desc')
+    // )
     const [realtimePosts, loading, error] = useCollection(
-        collection(getFirestore(app),'posts')
-    )
-    // console.log(realtimePosts.docs,'POSTS!!!!!')
-
-    // const getData = async () => {
-    //     const querySnapshot = await getDocs(collection(database, "posts"));
-    //     console.log(querySnapshot.docs.toString())
-    //     querySnapshot.forEach((doc) => {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         console.log(doc.id, " => ", doc.data());
-    //       });
-    //       setData(querySnapshot)
-    // }
-
-    // useEffect(()=>{
-    //     getData()
-    // },[])
-
-    // querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
-    // });
+      collection(getFirestore(app),'posts')
+      )
 
   return (
     <div>

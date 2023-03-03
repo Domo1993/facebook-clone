@@ -1,9 +1,8 @@
 import Image from 'next/image'
-import { useSession, signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 function Login(){
-    // const { data: session } = useSession()
-    // console.log(session,"LOgin Session")
+
     return(
         <div className='grid place-items-center'>
             <Image src="https://links.papareact.com/t4i"

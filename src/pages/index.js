@@ -7,7 +7,7 @@ import SideBar from '../components/SideBar'
 import Feed from '../components/Feed'
 import Widgets from '../components/Widgets'
 import { database } from '../../firebase'
-import { collection, getFirestore, getDocs } from "firebase/firestore";
+import { collection, getFirestore, getDocs, orderBy } from "firebase/firestore";
 
 export default function Home({ session, posts }) {
 
@@ -31,13 +31,12 @@ export default function Home({ session, posts }) {
 }
 
 export async function getServerSideProps(context){
-  console.log(authOptions.userinfo,'AUTH')
   // Get the user
   const session = await getServerSession(context.req, context.res, authOptions)
 
   // const posts = await database.collection("posts").orderBy("timestamp", "desc").get()
 
-  const posts = await getDocs(collection(database, "posts"))
+  const posts = await getDocs(collection(database, "posts"), orderBy('timestamp','desc'))
 
   const docs = posts.docs.map(post => ({
     id: post.id,
@@ -45,7 +44,6 @@ export async function getServerSideProps(context){
     timestamp: null
   }))
 
-  console.log(session, "SESSION")
   return {
     props: {
       session,

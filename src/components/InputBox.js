@@ -20,12 +20,12 @@ export default function InputBox() {
         e.preventDefault()
         if(!inputRef.current.value) return;
         const message = inputRef.current.value
-        console.log(message,"MESSAGE")
+
         if(imageToPost){
             const storageRef = ref(storage, `posts${e.timeStamp}`)
             uploadString(storageRef, imageToPost, "data_url").then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
-                    console.log(url,'URL')
+
                   setDoc(doc(dbInstance), {
                     message: message,
                     name: data.user.name,
